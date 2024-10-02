@@ -1,0 +1,33 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+from joblib import dump, load
+from joblib import load
+
+try:
+    vectorizer = load('C:/Users/Jayashree/Desktop/django/myproject/models/vectorizer.pkl')
+    print("Vectorizer loaded successfully.")
+except Exception as e:
+    print(f"Error loading vectorizer: {e}")
+
+# Example text data
+your_text_data = ["sample text data", "another example text"]
+
+# Create and fit the vectorizer
+vectorizer = TfidfVectorizer()
+vectorizer.fit(your_text_data)
+
+# Save the vectorizer to a file
+vectorizer_filename = 'vectorizer.pkl'
+dump(vectorizer, vectorizer_filename)
+print(f"Vectorizer saved to {vectorizer_filename}")
+
+# Load the vectorizer from the file
+loaded_vectorizer = load(vectorizer_filename)
+print(f"Vectorizer loaded from {vectorizer_filename}")
+
+# Transform new text data
+new_text_data = ["Your new text data"]
+transformed_data = loaded_vectorizer.transform(new_text_data)
+
+# Print the transformed data
+print("Transformed data:")
+print(transformed_data.toarray())  # Convert to array for better readability
